@@ -72,6 +72,7 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
 jetbrains-kotlin-plugin-serializzation = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinPlugin" }
+jetbrains-kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 
 [bundles]
 retrofit = ["okhttp", "okttp-logging-interceptor", "retrofit", "retrofit-converter-gson", "retrofit-converter-kotlinx-serialization"]

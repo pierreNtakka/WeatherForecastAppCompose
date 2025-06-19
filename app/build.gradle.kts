@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.jetbrains.kotlin.plugin.serializzation)
+    alias(libs.plugins.jetbrains.kotlin.parcelize)
 }
 
 android {

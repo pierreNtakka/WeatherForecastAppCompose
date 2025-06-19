@@ -1,6 +1,5 @@
 package com.pietroditta.weatherforecastapp.screens.search
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,6 +23,8 @@ import androidx.navigation.NavController
 import com.pietroditta.weatherforecastapp.widget.WeatherAppBar
 
 
+val SEARCH_SCREEN_RESULT_KEY = "SEARCH_SCREEN_RESULT_KEY"
+
 @Composable
 fun SearchScreen(navController: NavController, searchViewModel: SearchViewModel) {
     Scaffold(topBar = {
@@ -36,13 +37,21 @@ fun SearchScreen(navController: NavController, searchViewModel: SearchViewModel)
                 navController.popBackStack()
             })
     }) { innerPadding ->
-        SearchContent(modifier = Modifier.padding(innerPadding), searchViewModel = searchViewModel)
+        SearchContent(
+            modifier = Modifier.padding(innerPadding),
+            searchViewModel = searchViewModel,
+            navController
+        )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchContent(modifier: Modifier, searchViewModel: SearchViewModel) {
+fun SearchContent(
+    modifier: Modifier,
+    searchViewModel: SearchViewModel,
+    navController: NavController
+) {
     var expanded by rememberSaveable { mutableStateOf(false) }
     var query by rememberSaveable { mutableStateOf("") }
     val searchResults by searchViewModel.suggestions.collectAsState()
@@ -81,7 +90,10 @@ fun SearchContent(modifier: Modifier, searchViewModel: SearchViewModel) {
                         .fillMaxWidth()
                         .padding(10.dp)
                         .clickable {
-                            Log.d("SearchScreen", "Selected: ${result.name}")
+                            navController.previousBackStackEntry
+                                ?.savedStateHandle
+                                ?.set(SEARCH_SCREEN_RESULT_KEY, result)
+                            navController.popBackStack()
                             expanded = false
                         }
                 )

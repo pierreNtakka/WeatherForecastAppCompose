@@ -38,33 +38,47 @@ import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.pietroditta.weatherforecastapp.R
 import com.pietroditta.weatherforecastapp.model.DataOrException
+import com.pietroditta.weatherforecastapp.model.GeocoderResult
 import com.pietroditta.weatherforecastapp.model.Weather
 import com.pietroditta.weatherforecastapp.model.WeatherItem
 import com.pietroditta.weatherforecastapp.repository.MockedDataRepository
+import com.pietroditta.weatherforecastapp.screens.search.SEARCH_SCREEN_RESULT_KEY
 import com.pietroditta.weatherforecastapp.widget.WeatherAppBar
 
 @Composable
 fun MainScreen(navController: NavController, mainViewModel: MainViewModel) {
+
+    val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
+    val selectedCity = savedStateHandle?.get<GeocoderResult>(SEARCH_SCREEN_RESULT_KEY)
+
     val weatherData =
         produceState<DataOrException<Weather, Boolean, Exception>>(
             initialValue = DataOrException(
                 loading = true
             )
         ) {
-            value = mainViewModel.getGeocodingData("Maputo")
+            value = mainViewModel.getGeocodingData(selectedCity)
         }.value
 
-    if (weatherData.loading) {
-        CircularProgressIndicator()
-    } else if (weatherData.data != null) {
-        MainScaffold(
-            weather = weatherData.data!!,
-            navController = navController
-        )
-    } else if (weatherData.e != null) {
-        Text(text = "Error: ${weatherData.e!!.message}")
-    } else {
-        Text(text = "No data available")
+    when {
+        weatherData.loading -> {
+            CircularProgressIndicator()
+        }
+
+        weatherData.data != null -> {
+            MainScaffold(
+                weather = weatherData.data!!,
+                navController = navController
+            )
+        }
+
+        weatherData.e != null -> {
+            Text(text = "Error: ${weatherData.e!!.message}")
+        }
+
+        else -> {
+            Text(text = "No data available")
+        }
     }
 }
 
@@ -90,7 +104,6 @@ fun MainContent(
     weather: Weather = MockedDataRepository.getMockedWeatherData(),
     modifier: Modifier = Modifier
 ) {
-
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
@@ -106,7 +119,7 @@ fun MainContent(
             modifier = Modifier
                 .padding(4.dp)
                 .size(200.dp),
-            color = Color(0xFFB2C1DF),
+            color = Color(0xABE01EC2),
             shape = CircleShape
         ) {
             Column(
@@ -148,7 +161,6 @@ fun MainContent(
         )
 
         WeekForecast(list = weather.list)
-
 
     }
 }

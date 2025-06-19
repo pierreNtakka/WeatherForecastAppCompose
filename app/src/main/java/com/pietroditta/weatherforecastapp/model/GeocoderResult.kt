@@ -1,10 +1,13 @@
 package com.pietroditta.weatherforecastapp.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Geocoder(
+@Parcelize
+data class GeocoderResult(
     val country: String,
     val lat: Double,
     @SerialName("local_names")
@@ -12,4 +15,4 @@ data class Geocoder(
     val lon: Double,
     val name: String,
     val state: String? = null
-)
+) : Parcelable

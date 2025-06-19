@@ -1,6 +1,6 @@
 package com.pietroditta.weatherforecastapp.network
 
-import com.pietroditta.weatherforecastapp.model.Geocoder
+import com.pietroditta.weatherforecastapp.model.GeocoderResult
 import com.pietroditta.weatherforecastapp.model.Weather
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -16,7 +16,7 @@ interface WeatherApi {
         cityName: String,
         @Query("limit")
         limit: Int = 3
-    ): List<Geocoder>
+    ): List<GeocoderResult>
 
 
     @GET("data/2.5/forecast")

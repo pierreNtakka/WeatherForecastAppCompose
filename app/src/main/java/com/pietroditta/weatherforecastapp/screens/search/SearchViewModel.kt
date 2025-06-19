@@ -3,7 +3,7 @@ package com.pietroditta.weatherforecastapp.screens.search
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pietroditta.weatherforecastapp.model.Geocoder
+import com.pietroditta.weatherforecastapp.model.GeocoderResult
 import com.pietroditta.weatherforecastapp.screens.main.use_case.DirectGeocoderUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -16,19 +16,21 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(private val geocoderUseCase: DirectGeocoderUseCase) :
+class SearchViewModel @Inject constructor(
+    private val geocoderUseCase: DirectGeocoderUseCase
+) :
     ViewModel() {
 
-    private val _suggestions = MutableStateFlow<List<Geocoder>>(emptyList())
-    val suggestions: StateFlow<List<Geocoder>> = _suggestions.asStateFlow()
+    private val _suggestions = MutableStateFlow<List<GeocoderResult>>(emptyList())
+    val suggestions: StateFlow<List<GeocoderResult>> = _suggestions.asStateFlow()
 
     private var searchJob: Job? = null
 
-    fun onQueryChanged(newQuery: String) {
+    fun onQueryChanged(cityName: String) {
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
             delay(500) // Debounce delay
-            onSearchSuspend(newQuery)
+            onSearchSuspend(cityName)
         }
     }
 
@@ -36,7 +38,6 @@ class SearchViewModel @Inject constructor(private val geocoderUseCase: DirectGeo
         viewModelScope.launch {
             onSearchSuspend(cityName)
         }
-
     }
 
     private suspend fun onSearchSuspend(cityName: String) {
