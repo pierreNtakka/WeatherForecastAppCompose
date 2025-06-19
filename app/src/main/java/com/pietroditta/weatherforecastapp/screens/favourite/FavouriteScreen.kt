@@ -22,7 +22,6 @@ fun FavoriteScreen(navController: NavController) {
                 navController.popBackStack() // Navigate back to the previous screen
             })
     }) { innerPadding ->
-        // Content of the Settings Screen
         FavoriteContent(modifier = Modifier.padding(innerPadding))
 
     }
