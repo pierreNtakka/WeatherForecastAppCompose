@@ -5,10 +5,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.pietroditta.weatherforecastapp.screens.favourite.FavoriteScreen
 import com.pietroditta.weatherforecastapp.screens.main.MainScreen
 import com.pietroditta.weatherforecastapp.screens.main.MainViewModel
 import com.pietroditta.weatherforecastapp.screens.search.SearchScreen
 import com.pietroditta.weatherforecastapp.screens.search.SearchViewModel
+import com.pietroditta.weatherforecastapp.screens.settings.AboutScreen
 import com.pietroditta.weatherforecastapp.screens.settings.SettingsScreen
 import com.pietroditta.weatherforecastapp.screens.splash.WeatherSplashScreen
 
@@ -34,6 +36,14 @@ fun WeatherNavigation() {
 
         composable(WeatherScreen.SettingsScreen.name) {
             SettingsScreen(navController)
+        }
+
+        composable(WeatherScreen.AboutScreen.name) {
+            AboutScreen(navController)
+        }
+
+        composable(WeatherScreen.FavoritesScreen.name) {
+            FavoriteScreen(navController)
         }
 
 

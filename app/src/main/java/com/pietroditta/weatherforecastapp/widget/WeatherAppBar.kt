@@ -2,6 +2,7 @@ package com.pietroditta.weatherforecastapp.widget
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
@@ -39,8 +40,7 @@ fun WeatherAppBar(
     onButtonClicked: () -> Unit = {},
 ) {
 
-    var showDialog by remember { mutableStateOf(false) }
-    // Placeholder for dialog logic
+    var topBarDropDownMenuState by remember { mutableStateOf(false) }
 
     TopAppBar(
         title = {
@@ -68,43 +68,23 @@ fun WeatherAppBar(
                     )
                 }
                 IconButton(onClick = {
-                    showDialog = true
+                    topBarDropDownMenuState = !topBarDropDownMenuState
                 }) {
                     Icon(
                         imageVector = Icons.Default.MoreVert,
-                        contentDescription = "Settings Icon",
+                        contentDescription = "More Icon",
                         tint = Color.White
                     )
                 }
 
-                DropdownMenu(
-                    expanded = showDialog,
-                    onDismissRequest = { showDialog = false }
-                ) {
+                TopBarDropdownMenu(
+                    navController = navController!!,
+                    expanded = topBarDropDownMenuState,
+                    onDismissRequest = {
+                        topBarDropDownMenuState = false
+                    })
 
-                    DropdownMenuItem(
-                        text = { Text("Favorite") },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Favorite,
-                                contentDescription = "Favorite Icon",
-                                tint = Color.Black
-                            )
-                        },
-                        onClick = { }
-                    )
-                    DropdownMenuItem(
-                        text = { Text("Settings") },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Settings,
-                                contentDescription = "Settings Icon",
-                                tint = Color.Black
-                            )
-                        },
-                        onClick = { navController?.navigate(WeatherScreen.SettingsScreen.name) }
-                    )
-                }
+
             }
         },
         navigationIcon = {
@@ -119,4 +99,55 @@ fun WeatherAppBar(
             }
         })
 
+}
+
+@Composable
+fun TopBarDropdownMenu(
+    navController: NavController,
+    expanded: Boolean,
+    onDismissRequest: () -> Unit = { },
+) {
+    DropdownMenu(
+        expanded = expanded,
+        onDismissRequest = onDismissRequest
+    ) {
+
+        DropdownMenuItem(
+            text = { Text("Favorite") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Favorite,
+                    contentDescription = "Favorite Icon",
+                    tint = Color.Black
+                )
+            },
+            onClick = {
+                navController.navigate(WeatherScreen.FavoritesScreen.name)
+            }
+        )
+        DropdownMenuItem(
+            text = { Text("About") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Info,
+                    contentDescription = "Info Icon",
+                    tint = Color.Black
+                )
+            },
+            onClick = {
+                navController.navigate(WeatherScreen.AboutScreen.name)
+            }
+        )
+        DropdownMenuItem(
+            text = { Text("Settings") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Settings,
+                    contentDescription = "Settings Icon",
+                    tint = Color.Black
+                )
+            },
+            onClick = { navController.navigate(WeatherScreen.SettingsScreen.name) }
+        )
+    }
 }
