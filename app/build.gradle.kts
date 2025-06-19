@@ -21,7 +21,8 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "API_KEY", "\"9f3286aba5f980b6b6a81ed93bc97ef8\"")
-        buildConfigField("String", "BASE_URL", "\"https://api.openweathermap.org/\"")
+        buildConfigField("String", "API_BASE_URL", "\"https://api.openweathermap.org/\"")
+        buildConfigField("String", "OPEN_WEATHER_BASE_URL", "\"https://openweathermap.org/\"")
     }
 
     buildTypes {
@@ -56,6 +57,10 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+    //Coil
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 
     //Retrofit
     implementation(libs.bundles.retrofit)

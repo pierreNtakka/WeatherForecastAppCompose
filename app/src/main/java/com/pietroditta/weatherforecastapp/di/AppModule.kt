@@ -42,7 +42,7 @@ object AppModule {
             Json.asConverterFactory(
                 "application/json; charset=UTF8".toMediaType()
             )
-        ).baseUrl(BuildConfig.BASE_URL)
+        ).baseUrl(BuildConfig.API_BASE_URL)
             .client(okHttpClient).build()
             .create(WeatherApi::class.java)
     }
