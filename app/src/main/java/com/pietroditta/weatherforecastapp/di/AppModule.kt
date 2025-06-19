@@ -2,8 +2,8 @@ package com.pietroditta.weatherforecastapp.di
 
 import android.util.Log
 import com.pietroditta.weatherforecastapp.BuildConfig
-import com.pietroditta.weatherforecastapp.data.WeatherApi
 import com.pietroditta.weatherforecastapp.network.ApiKeyInterceptor
+import com.pietroditta.weatherforecastapp.network.WeatherApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,4 +46,5 @@ object AppModule {
             .client(okHttpClient).build()
             .create(WeatherApi::class.java)
     }
+
 }

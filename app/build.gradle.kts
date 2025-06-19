@@ -21,7 +21,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "API_KEY", "\"9f3286aba5f980b6b6a81ed93bc97ef8\"")
-        buildConfigField("String", "BASE_URL", "\"https://api.openweathermap.org/data/3.0/\"")
+        buildConfigField("String", "BASE_URL", "\"https://api.openweathermap.org/\"")
     }
 
     buildTypes {

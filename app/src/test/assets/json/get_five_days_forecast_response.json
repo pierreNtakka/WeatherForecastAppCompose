@@ -1,0 +1,215 @@
+{
+  "cod": "200",
+  "message": 0,
+  "cnt": 5,
+  "list": [
+    {
+      "dt": 1750323600,
+      "main": {
+        "temp": 22.71,
+        "feels_like": 22.92,
+        "temp_min": 22.71,
+        "temp_max": 23.33,
+        "pressure": 1016,
+        "sea_level": 1016,
+        "grnd_level": 987,
+        "humidity": 72,
+        "temp_kf": -0.62
+      },
+      "weather": [
+        {
+          "id": 500,
+          "main": "Rain",
+          "description": "light rain",
+          "icon": "10d"
+        }
+      ],
+      "clouds": {
+        "all": 29
+      },
+      "wind": {
+        "speed": 1.92,
+        "deg": 230,
+        "gust": 2.64
+      },
+      "visibility": 10000,
+      "pop": 0.64,
+      "rain": {
+        "3h": 0.28
+      },
+      "sys": {
+        "pod": "d"
+      },
+      "dt_txt": "2025-06-19 09:00:00"
+    },
+    {
+      "dt": 1750334400,
+      "main": {
+        "temp": 22.17,
+        "feels_like": 22.04,
+        "temp_min": 22.06,
+        "temp_max": 22.17,
+        "pressure": 1016,
+        "sea_level": 1016,
+        "grnd_level": 987,
+        "humidity": 61,
+        "temp_kf": 0.11
+      },
+      "weather": [
+        {
+          "id": 500,
+          "main": "Rain",
+          "description": "light rain",
+          "icon": "10d"
+        }
+      ],
+      "clouds": {
+        "all": 56
+      },
+      "wind": {
+        "speed": 1.41,
+        "deg": 265,
+        "gust": 1.7
+      },
+      "visibility": 7963,
+      "pop": 1,
+      "rain": {
+        "3h": 2.2
+      },
+      "sys": {
+        "pod": "d"
+      },
+      "dt_txt": "2025-06-19 12:00:00"
+    },
+    {
+      "dt": 1750345200,
+      "main": {
+        "temp": 21.53,
+        "feels_like": 21.91,
+        "temp_min": 21.53,
+        "temp_max": 21.53,
+        "pressure": 1017,
+        "sea_level": 1017,
+        "grnd_level": 987,
+        "humidity": 83,
+        "temp_kf": 0
+      },
+      "weather": [
+        {
+          "id": 501,
+          "main": "Rain",
+          "description": "moderate rain",
+          "icon": "10d"
+        }
+      ],
+      "clouds": {
+        "all": 100
+      },
+      "wind": {
+        "speed": 1.15,
+        "deg": 126,
+        "gust": 1.6
+      },
+      "visibility": 8552,
+      "pop": 1,
+      "rain": {
+        "3h": 4.39
+      },
+      "sys": {
+        "pod": "d"
+      },
+      "dt_txt": "2025-06-19 15:00:00"
+    },
+    {
+      "dt": 1750356000,
+      "main": {
+        "temp": 20.96,
+        "feels_like": 21.12,
+        "temp_min": 20.96,
+        "temp_max": 20.96,
+        "pressure": 1017,
+        "sea_level": 1017,
+        "grnd_level": 987,
+        "humidity": 77,
+        "temp_kf": 0
+      },
+      "weather": [
+        {
+          "id": 500,
+          "main": "Rain",
+          "description": "light rain",
+          "icon": "10d"
+        }
+      ],
+      "clouds": {
+        "all": 100
+      },
+      "wind": {
+        "speed": 1.97,
+        "deg": 82,
+        "gust": 2.59
+      },
+      "visibility": 10000,
+      "pop": 1,
+      "rain": {
+        "3h": 2.09
+      },
+      "sys": {
+        "pod": "d"
+      },
+      "dt_txt": "2025-06-19 18:00:00"
+    },
+    {
+      "dt": 1750366800,
+      "main": {
+        "temp": 20.16,
+        "feels_like": 20.27,
+        "temp_min": 20.16,
+        "temp_max": 20.16,
+        "pressure": 1017,
+        "sea_level": 1017,
+        "grnd_level": 987,
+        "humidity": 78,
+        "temp_kf": 0
+      },
+      "weather": [
+        {
+          "id": 500,
+          "main": "Rain",
+          "description": "light rain",
+          "icon": "10n"
+        }
+      ],
+      "clouds": {
+        "all": 100
+      },
+      "wind": {
+        "speed": 1.25,
+        "deg": 52,
+        "gust": 1.07
+      },
+      "visibility": 10000,
+      "pop": 0.31,
+      "rain": {
+        "3h": 0.16
+      },
+      "sys": {
+        "pod": "n"
+      },
+      "dt_txt": "2025-06-19 21:00:00"
+    }
+  ],
+  "city": {
+    "id": 6535661,
+    "name": "Buseto Palizzolo",
+    "coord": {
+      "lat": 37.9762,
+      "lon": 12.6919
+    },
+    "country": "IT",
+    "population": 3197,
+    "timezone": 7200,
+    "sunrise": 1750304797,
+    "sunset": 1750358074
+  }
+}
