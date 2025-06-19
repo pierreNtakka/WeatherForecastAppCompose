@@ -1,47 +1,37 @@
 package com.pietroditta.weatherforecastapp.screens.main
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.pietroditta.weatherforecastapp.model.DataOrException
+import com.pietroditta.weatherforecastapp.model.Weather
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val geocodingUseCase: DirectGeocoderUseCase,
     private val daySummaryUseCase: GetDaysForecastUseCase
-) :
-    ViewModel() {
+) : ViewModel() {
 
-
-    fun getGeocodingData(cityName: String) = viewModelScope.launch {
+    suspend fun getGeocodingData(cityName: String): DataOrException<Weather, Boolean, Exception> {
 
         val geocodingResponse = geocodingUseCase(DirectGeocoderUseCase.Params(cityName))
 
-        if (geocodingResponse.data.isNullOrEmpty()) return@launch
+        if (geocodingResponse.data.isNullOrEmpty()) {
+            return DataOrException(
+                data = null,
+                loading = false,
+                e = Exception("No geocoding data found for city: $cityName")
+            )
+        }
 
         val dataResponse = geocodingResponse.data!![0]
         val lat = dataResponse.lat
         val lon = dataResponse.lon
 
-        val daySummaryUseCase = daySummaryUseCase(
+
+        return daySummaryUseCase(
             GetDaysForecastUseCase.Params(lat, lon)
         )
-
-        if (daySummaryUseCase.data != null) {
-            Log.d("MainViewModel", "Day summary data: ${daySummaryUseCase.data}")
-        } else if (daySummaryUseCase.e != null) {
-            Log.e(
-                "MainViewModel",
-                "Error fetching day summary: ${daySummaryUseCase.e!!.message}"
-            )
-        } else {
-            Log.e(
-                "MainViewModel",
-                "Error fetching day summary:"
-            )
-        }
 
     }
 
