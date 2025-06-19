@@ -1,4 +1,4 @@
-package com.pietroditta.weatherforecastapp.screens.main
+package com.pietroditta.weatherforecastapp.screens.main.use_case
 
 import com.pietroditta.weatherforecastapp.model.DataOrException
 import com.pietroditta.weatherforecastapp.model.Geocoder

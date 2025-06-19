@@ -48,7 +48,9 @@ fun WeatherAppBar(
         ),
         actions = {
             if (isMainScreen) {
-                IconButton(onClick = {}) {
+                IconButton(onClick = {
+                    navController?.navigate(WeatherScreen.SearchScreen.name)
+                }) {
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = "Search",

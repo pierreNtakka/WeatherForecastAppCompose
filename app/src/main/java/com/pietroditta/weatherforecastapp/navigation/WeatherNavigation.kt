@@ -7,6 +7,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.pietroditta.weatherforecastapp.screens.main.MainScreen
 import com.pietroditta.weatherforecastapp.screens.main.MainViewModel
+import com.pietroditta.weatherforecastapp.screens.search.SearchScreen
+import com.pietroditta.weatherforecastapp.screens.search.SearchViewModel
 import com.pietroditta.weatherforecastapp.screens.settings.SettingsScreen
 import com.pietroditta.weatherforecastapp.screens.splash.WeatherSplashScreen
 
@@ -23,6 +25,11 @@ fun WeatherNavigation() {
         composable(WeatherScreen.MainScreen.name) {
             val mainViewModel: MainViewModel = hiltViewModel()
             MainScreen(navController, mainViewModel)
+        }
+
+        composable(WeatherScreen.SearchScreen.name) {
+            val searchViewModel: SearchViewModel = hiltViewModel()
+            SearchScreen(navController, searchViewModel)
         }
 
         composable(WeatherScreen.SettingsScreen.name) {

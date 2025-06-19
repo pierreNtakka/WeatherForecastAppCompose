@@ -3,6 +3,8 @@ package com.pietroditta.weatherforecastapp.screens.main
 import androidx.lifecycle.ViewModel
 import com.pietroditta.weatherforecastapp.model.DataOrException
 import com.pietroditta.weatherforecastapp.model.Weather
+import com.pietroditta.weatherforecastapp.screens.main.use_case.DirectGeocoderUseCase
+import com.pietroditta.weatherforecastapp.screens.main.use_case.GetDaysForecastUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
