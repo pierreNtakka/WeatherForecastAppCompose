@@ -54,15 +54,14 @@ fun AboutContent(modifier: Modifier = Modifier) {
                         "Developed by Pietro Ditta",
                 modifier = Modifier.padding(16.dp),
                 textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.Bold
             )
             Text(
                 text = "Weather API:\n ${BuildConfig.API_BASE_URL}\n",
                 modifier = Modifier.padding(16.dp),
                 textAlign = TextAlign.Center,
-                fontWeight = FontWeight.SemiBold,
-
-                )
+                fontWeight = FontWeight.SemiBold
+            )
         }
     }
 }
