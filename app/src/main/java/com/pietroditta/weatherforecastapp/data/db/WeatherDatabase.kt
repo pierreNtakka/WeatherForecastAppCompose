@@ -5,8 +5,9 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.pietroditta.weatherforecastapp.data.db.converter.UUIDConverter
 import com.pietroditta.weatherforecastapp.model.Favorite
+import com.pietroditta.weatherforecastapp.model.MeasurementUnit
 
-@Database(entities = [Favorite::class], version = 1, exportSchema = false)
+@Database(entities = [Favorite::class, MeasurementUnit::class], version = 1, exportSchema = false)
 @TypeConverters(UUIDConverter::class)
 abstract class WeatherDatabase : RoomDatabase() {
 
@@ -15,5 +16,7 @@ abstract class WeatherDatabase : RoomDatabase() {
     }
 
     abstract fun favoriteDao(): FavoriteDao
+
+    abstract fun measurementUnitDao(): MeasurementUnitDao
 
 }

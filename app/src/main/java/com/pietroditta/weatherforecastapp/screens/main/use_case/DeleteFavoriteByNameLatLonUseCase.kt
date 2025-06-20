@@ -1,12 +1,12 @@
 package com.pietroditta.weatherforecastapp.screens.main.use_case
 
-import com.pietroditta.weatherforecastapp.repository.FavoriteRepository
+import com.pietroditta.weatherforecastapp.repository.DatabaseRepository
 import javax.inject.Inject
 
-class DeleteFavoriteByNameLatLonUseCase @Inject constructor(private val favoriteRepository: FavoriteRepository) {
+class DeleteFavoriteByNameLatLonUseCase @Inject constructor(private val databaseRepository: DatabaseRepository) {
 
     suspend operator fun invoke(params: Params) {
-        favoriteRepository.deleteByNameLatLon(params.name, params.lat, params.lon)
+        databaseRepository.deleteByNameLatLon(params.name, params.lat, params.lon)
     }
 
     class Params(

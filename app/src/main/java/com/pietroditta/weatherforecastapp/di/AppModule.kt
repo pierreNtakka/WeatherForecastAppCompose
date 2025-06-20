@@ -3,8 +3,10 @@ package com.pietroditta.weatherforecastapp.di
 import android.content.Context
 import android.util.Log
 import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.pietroditta.weatherforecastapp.BuildConfig
 import com.pietroditta.weatherforecastapp.data.db.FavoriteDao
+import com.pietroditta.weatherforecastapp.data.db.MeasurementUnitDao
 import com.pietroditta.weatherforecastapp.data.db.WeatherDatabase
 import com.pietroditta.weatherforecastapp.data.network.ApiKeyInterceptor
 import com.pietroditta.weatherforecastapp.data.network.WeatherApi
@@ -36,12 +38,27 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun measurementUnitDao(
+        db: WeatherDatabase
+    ): MeasurementUnitDao {
+        return db.measurementUnitDao()
+    }
+
+    @Singleton
+    @Provides
     fun provideWeatherDatabase(
         @ApplicationContext appContext: Context
     ): WeatherDatabase {
         return Room.databaseBuilder(
             appContext, WeatherDatabase::class.java, WeatherDatabase.DATABASE_NAME
-        ).fallbackToDestructiveMigration(false)
+        ).addCallback(object : RoomDatabase.Callback() {
+            override fun onCreate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
+                super.onCreate(db)
+                db.execSQL("INSERT INTO measurement_units (name) VALUES ('metric')")
+            }
+        })
+
+            .fallbackToDestructiveMigration(false)
             .build()
     }
 

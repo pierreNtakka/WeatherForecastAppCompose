@@ -13,6 +13,7 @@ import com.pietroditta.weatherforecastapp.screens.search.SearchScreen
 import com.pietroditta.weatherforecastapp.screens.search.SearchViewModel
 import com.pietroditta.weatherforecastapp.screens.settings.AboutScreen
 import com.pietroditta.weatherforecastapp.screens.settings.SettingsScreen
+import com.pietroditta.weatherforecastapp.screens.settings.SettingsViewModel
 import com.pietroditta.weatherforecastapp.screens.splash.WeatherSplashScreen
 
 @Composable
@@ -36,7 +37,8 @@ fun WeatherNavigation() {
         }
 
         composable(WeatherScreen.SettingsScreen.name) {
-            SettingsScreen(navController)
+            val settingsViewModel: SettingsViewModel = hiltViewModel()
+            SettingsScreen(navController, settingsViewModel)
         }
 
         composable(WeatherScreen.AboutScreen.name) {

@@ -1,11 +1,11 @@
 package com.pietroditta.weatherforecastapp.screens.favourite.usecase
 
-import com.pietroditta.weatherforecastapp.repository.FavoriteRepository
+import com.pietroditta.weatherforecastapp.repository.DatabaseRepository
 import javax.inject.Inject
 
 class GetFavoritesUseCase @Inject constructor(
-    private val favoriteRepository: FavoriteRepository
+    private val databaseRepository: DatabaseRepository
 ) {
 
-    operator fun invoke() = favoriteRepository.getAll()
+    operator fun invoke() = databaseRepository.getAll()
 }
