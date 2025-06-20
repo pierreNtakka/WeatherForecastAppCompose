@@ -30,5 +30,6 @@ interface FavoriteDao {
     @Query("DELETE FROM favorites WHERE name = :cityName AND lat = :lat AND lon = :lon")
     suspend fun deleteByNameLatLon(cityName: String, lat: Double, lon: Double)
 
-
+    @Query("SELECT * FROM favorites WHERE name = :cityName AND lat = :lat AND lon = :lon")
+    suspend fun findByCityNameLatLon(cityName: String, lat: Double, lon: Double): Favorite?
 }

@@ -23,11 +23,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.produceState
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -49,26 +46,29 @@ import com.pietroditta.weatherforecastapp.model.GeocoderResult
 import com.pietroditta.weatherforecastapp.model.Weather
 import com.pietroditta.weatherforecastapp.model.WeatherItem
 import com.pietroditta.weatherforecastapp.repository.MockedDataRepository
-import com.pietroditta.weatherforecastapp.screens.favourite.FavoriteViewModel
 import com.pietroditta.weatherforecastapp.screens.search.SEARCH_SCREEN_RESULT_KEY
 import com.pietroditta.weatherforecastapp.widget.WeatherAppBar
 
 @Composable
 fun MainScreen(
     navController: NavController,
-    mainViewModel: MainViewModel,
-    favoriteViewModel: FavoriteViewModel
+    mainViewModel: MainViewModel
 ) {
     val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
     val searchCity = savedStateHandle?.get<GeocoderResult>(SEARCH_SCREEN_RESULT_KEY)
+    searchCity?.let {
+        mainViewModel.geocoderResult = it
+    }
+    mainViewModel.isFavorite()
+    val isFavorite = mainViewModel.isFavoriteStateFlow.collectAsState()
 
-    var isFavorite by remember {
+    /*var isFavorite by remember {
         if (searchCity != null) {
             mainViewModel.geocoderResult = searchCity
         }
         val isF = favoriteViewModel.isFavorite(mainViewModel.geocoderResult)
         mutableStateOf(isF)
-    }
+    }*/
 
     val weatherData =
         produceState<DataOrException<Weather, Boolean, Exception>>(
@@ -89,11 +89,9 @@ fun MainScreen(
             MainScaffold(
                 weather = weatherData.data!!,
                 navController = navController,
-                isFavorite = isFavorite,
+                isFavorite = isFavorite.value,
                 onButtonClicked = {
-                    mainViewModel.addOrRemoveFavorite(isFavorite)
-                    isFavorite = !isFavorite
-
+                    mainViewModel.addOrRemoveFavorite()
                     /*mainViewModel.geocoderResult?.let {
                         if (!isFavorite) {
                             favoriteViewModel.addFavorite(it)

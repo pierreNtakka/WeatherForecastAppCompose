@@ -9,9 +9,12 @@ import com.pietroditta.weatherforecastapp.model.Weather
 import com.pietroditta.weatherforecastapp.screens.favourite.usecase.AddFavoriteUseCase
 import com.pietroditta.weatherforecastapp.screens.main.use_case.DeleteFavoriteByNameLatLonUseCase
 import com.pietroditta.weatherforecastapp.screens.main.use_case.DirectGeocoderUseCase
+import com.pietroditta.weatherforecastapp.screens.main.use_case.FindFavoriteByCityNameLatLonUseCase
 import com.pietroditta.weatherforecastapp.screens.main.use_case.GetDaysForecastUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,10 +23,15 @@ class MainViewModel @Inject constructor(
     private val geocodingUseCase: DirectGeocoderUseCase,
     private val daySummaryUseCase: GetDaysForecastUseCase,
     private val addFavoriteUseCase: AddFavoriteUseCase,
-    private val deleteFavoriteByNameLatLonUseCase: DeleteFavoriteByNameLatLonUseCase
+    private val deleteFavoriteByNameLatLonUseCase: DeleteFavoriteByNameLatLonUseCase,
+    private val findFavoriteByCityNameLatLonUseCase: FindFavoriteByCityNameLatLonUseCase
 ) : ViewModel() {
 
     var geocoderResult: GeocoderResult? = null
+
+   private val isFavoriteState = MutableStateFlow<Boolean>(false)
+    val isFavoriteStateFlow = isFavoriteState.asStateFlow()
+
 
     suspend fun getGeocodingData(): DataOrException<Weather, Boolean, Exception> {
 
@@ -60,10 +68,27 @@ class MainViewModel @Inject constructor(
     }
 
 
-    fun addOrRemoveFavorite(isFavorite: Boolean) {
+    fun isFavorite() {
         geocoderResult?.let { geocoderResult ->
             viewModelScope.launch(Dispatchers.IO) {
-                if (!isFavorite) {
+                val isFavorite = findFavoriteByCityNameLatLonUseCase(
+                    FindFavoriteByCityNameLatLonUseCase.Params(
+                        geocoderResult.name,
+                        geocoderResult.lat,
+                        geocoderResult.lon
+                    )
+                )
+                isFavoriteState.value = isFavorite != null
+            }
+        } ?: run {
+            isFavoriteState.value = false
+        }
+    }
+
+    fun addOrRemoveFavorite() {
+        geocoderResult?.let { geocoderResult ->
+            viewModelScope.launch(Dispatchers.IO) {
+                if (!isFavoriteState.value) {
                     val favorite = Favorite(
                         name = geocoderResult.name,
                         country = geocoderResult.country,
@@ -81,6 +106,7 @@ class MainViewModel @Inject constructor(
                         )
                     )
                 }
+                isFavoriteState.value = !isFavoriteState.value
             }
         }
     }

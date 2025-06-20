@@ -29,4 +29,8 @@ class FavoriteRepository @Inject constructor(
         favoriteDao.deleteByNameLatLon(name, lat, lon)
     }
 
+    suspend fun findByCityNameLatLon(name: String, lat: Double, lon: Double): Favorite? {
+        return favoriteDao.findByCityNameLatLon(name, lat, lon)
+    }
+
 }
