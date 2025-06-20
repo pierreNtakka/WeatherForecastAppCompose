@@ -23,7 +23,7 @@ import androidx.navigation.NavController
 import com.pietroditta.weatherforecastapp.widget.WeatherAppBar
 
 
-val SEARCH_SCREEN_RESULT_KEY = "SEARCH_SCREEN_RESULT_KEY"
+const val SEARCH_SCREEN_RESULT_KEY = "SEARCH_SCREEN_RESULT_KEY"
 
 @Composable
 fun SearchScreen(navController: NavController, searchViewModel: SearchViewModel) {
@@ -90,9 +90,10 @@ fun SearchContent(
                         .fillMaxWidth()
                         .padding(10.dp)
                         .clickable {
-                            navController.previousBackStackEntry
-                                ?.savedStateHandle
-                                ?.set(SEARCH_SCREEN_RESULT_KEY, result)
+                            searchViewModel.setGeocoderIntoSavedStateHandle(
+                                geocoderResult = result,
+                                navController = navController
+                            )
                             navController.popBackStack()
                             expanded = false
                         }

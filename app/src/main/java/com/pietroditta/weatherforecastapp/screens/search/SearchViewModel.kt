@@ -3,6 +3,7 @@ package com.pietroditta.weatherforecastapp.screens.search
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.pietroditta.weatherforecastapp.model.GeocoderResult
 import com.pietroditta.weatherforecastapp.screens.main.use_case.DirectGeocoderUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -57,6 +58,15 @@ class SearchViewModel @Inject constructor(
         } else {
             _suggestions.value = emptyList()
         }
+    }
+
+    fun setGeocoderIntoSavedStateHandle(
+        geocoderResult: GeocoderResult,
+        navController: NavController
+    ) {
+        val navBackStackEntry = navController.previousBackStackEntry
+        val savedStateHandle = navBackStackEntry?.savedStateHandle
+        savedStateHandle?.set(SEARCH_SCREEN_RESULT_KEY, geocoderResult)
     }
 
 

@@ -22,9 +22,7 @@ fun SettingsScreen(navController: NavController) {
                 navController.popBackStack() // Navigate back to the previous screen
             })
     }) { innerPadding ->
-        // Content of the Settings Screen
         SettingsContent(modifier = Modifier.padding(innerPadding))
-
     }
 }
 

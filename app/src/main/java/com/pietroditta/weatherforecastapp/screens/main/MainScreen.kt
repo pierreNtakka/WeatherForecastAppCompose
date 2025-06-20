@@ -12,6 +12,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -20,7 +23,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,14 +49,26 @@ import com.pietroditta.weatherforecastapp.model.GeocoderResult
 import com.pietroditta.weatherforecastapp.model.Weather
 import com.pietroditta.weatherforecastapp.model.WeatherItem
 import com.pietroditta.weatherforecastapp.repository.MockedDataRepository
+import com.pietroditta.weatherforecastapp.screens.favourite.FavoriteViewModel
 import com.pietroditta.weatherforecastapp.screens.search.SEARCH_SCREEN_RESULT_KEY
 import com.pietroditta.weatherforecastapp.widget.WeatherAppBar
 
 @Composable
-fun MainScreen(navController: NavController, mainViewModel: MainViewModel) {
-
+fun MainScreen(
+    navController: NavController,
+    mainViewModel: MainViewModel,
+    favoriteViewModel: FavoriteViewModel
+) {
     val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
-    val selectedCity = savedStateHandle?.get<GeocoderResult>(SEARCH_SCREEN_RESULT_KEY)
+    val searchCity = savedStateHandle?.get<GeocoderResult>(SEARCH_SCREEN_RESULT_KEY)
+
+    var isFavorite by remember {
+        if (searchCity != null) {
+            mainViewModel.geocoderResult = searchCity
+        }
+        val isF = favoriteViewModel.isFavorite(mainViewModel.geocoderResult)
+        mutableStateOf(isF)
+    }
 
     val weatherData =
         produceState<DataOrException<Weather, Boolean, Exception>>(
@@ -57,7 +76,8 @@ fun MainScreen(navController: NavController, mainViewModel: MainViewModel) {
                 loading = true
             )
         ) {
-            value = mainViewModel.getGeocodingData(selectedCity)
+            value = mainViewModel.getGeocodingData()
+            savedStateHandle?.remove<GeocoderResult>(SEARCH_SCREEN_RESULT_KEY)
         }.value
 
     when {
@@ -68,7 +88,22 @@ fun MainScreen(navController: NavController, mainViewModel: MainViewModel) {
         weatherData.data != null -> {
             MainScaffold(
                 weather = weatherData.data!!,
-                navController = navController
+                navController = navController,
+                isFavorite = isFavorite,
+                onButtonClicked = {
+                    mainViewModel.addOrRemoveFavorite(isFavorite)
+                    isFavorite = !isFavorite
+
+                    /*mainViewModel.geocoderResult?.let {
+                        if (!isFavorite) {
+                            favoriteViewModel.addFavorite(it)
+                            isFavorite = true
+                        } else {
+                            favoriteViewModel.deleteByName(it.name)
+                            isFavorite = false
+                        }
+                    }*/
+                }
             )
         }
 
@@ -83,11 +118,19 @@ fun MainScreen(navController: NavController, mainViewModel: MainViewModel) {
 }
 
 @Composable
-fun MainScaffold(weather: Weather, navController: NavController) {
+fun MainScaffold(
+    weather: Weather,
+    navController: NavController,
+    isFavorite: Boolean,
+    onButtonClicked: () -> Unit
+) {
+
     Scaffold(topBar = {
         WeatherAppBar(
             title = "${weather.city.name} ,${weather.city.country}",
             isMainScreen = true,
+            icon = if (isFavorite) Icons.Filled.Favorite else Icons.Default.FavoriteBorder,
+            onButtonClicked = onButtonClicked,
             navController = navController
         )
     }) { contentPadding ->
@@ -333,7 +376,7 @@ fun WeekForecastItem(
         horizontalArrangement = Arrangement.SpaceAround
     ) {
         Text(
-            text = weatherItem.dayOfWeek,
+            text = weatherItem.hourOfTheDay,
             modifier = Modifier
                 .padding(8.dp),
             style = MaterialTheme.typography.bodyMedium

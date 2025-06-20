@@ -1,4 +1,4 @@
-package com.pietroditta.weatherforecastapp.network
+package com.pietroditta.weatherforecastapp.data.network
 
 import com.pietroditta.weatherforecastapp.model.GeocoderResult
 import com.pietroditta.weatherforecastapp.model.Weather

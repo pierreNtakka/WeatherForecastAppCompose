@@ -2,7 +2,7 @@ package com.pietroditta.weatherforecastapp.repository
 
 import com.pietroditta.weatherforecastapp.model.GeocoderResult
 import com.pietroditta.weatherforecastapp.model.Weather
-import com.pietroditta.weatherforecastapp.network.WeatherApi
+import com.pietroditta.weatherforecastapp.data.network.WeatherApi
 import javax.inject.Inject
 
 class WeatherRepository @Inject constructor(

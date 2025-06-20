@@ -18,6 +18,6 @@ class WeatherItem(
     val weather: List<WeatherObject>,
     val wind: Wind
 ) {
-    val dayOfWeek: String
-        get() = DateTimeUtil.retrieveDayOfWeekFromUnixTimestamp(dt.toLong())
+    val hourOfTheDay: String
+        get() = DateTimeUtil.retrieveHourOfTheDayFromUnixTimestamp(dt.toLong())
 }

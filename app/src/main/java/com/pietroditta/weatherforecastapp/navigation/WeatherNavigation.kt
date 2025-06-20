@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.pietroditta.weatherforecastapp.screens.favourite.FavoriteScreen
+import com.pietroditta.weatherforecastapp.screens.favourite.FavoriteViewModel
 import com.pietroditta.weatherforecastapp.screens.main.MainScreen
 import com.pietroditta.weatherforecastapp.screens.main.MainViewModel
 import com.pietroditta.weatherforecastapp.screens.search.SearchScreen
@@ -26,7 +27,8 @@ fun WeatherNavigation() {
 
         composable(WeatherScreen.MainScreen.name) {
             val mainViewModel: MainViewModel = hiltViewModel()
-            MainScreen(navController, mainViewModel)
+            val favoriteViewModel: FavoriteViewModel = hiltViewModel()
+            MainScreen(navController, mainViewModel, favoriteViewModel)
         }
 
         composable(WeatherScreen.SearchScreen.name) {
@@ -43,7 +45,8 @@ fun WeatherNavigation() {
         }
 
         composable(WeatherScreen.FavoritesScreen.name) {
-            FavoriteScreen(navController)
+            val favoriteViewModel: FavoriteViewModel = hiltViewModel()
+            FavoriteScreen(navController, favoriteViewModel)
         }
 
 

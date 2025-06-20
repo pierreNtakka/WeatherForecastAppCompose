@@ -31,4 +31,9 @@ object DateTimeUtil {
             ZoneId.systemDefault()
         )
     }
+
+    fun retrieveHourOfTheDayFromUnixTimestamp(unixTimestamp: Long): String {
+        val dateTime = retrieveLocalDateTimeFromUnixTimestamp(unixTimestamp)
+        return dateTime.hour.toString().padStart(2, '0')
+    }
 }
