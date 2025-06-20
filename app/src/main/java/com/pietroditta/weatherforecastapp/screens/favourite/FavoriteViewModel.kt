@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.pietroditta.weatherforecastapp.model.Favorite
 import com.pietroditta.weatherforecastapp.model.GeocoderResult
-import com.pietroditta.weatherforecastapp.screens.favourite.usecase.AddFavoriteUseCase
 import com.pietroditta.weatherforecastapp.screens.favourite.usecase.DeleteFavoriteUseCase
 import com.pietroditta.weatherforecastapp.screens.favourite.usecase.GetFavoritesUseCase
 import com.pietroditta.weatherforecastapp.screens.search.SEARCH_SCREEN_RESULT_KEY
@@ -21,8 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoriteViewModel @Inject constructor(
     private val getFavoritesUseCase: GetFavoritesUseCase,
-    private val deleteFavoriteUseCase: DeleteFavoriteUseCase,
-    private val addFavoriteUseCase: AddFavoriteUseCase
+    private val deleteFavoriteUseCase: DeleteFavoriteUseCase
 ) : ViewModel() {
 
 
@@ -46,30 +44,6 @@ class FavoriteViewModel @Inject constructor(
             deleteFavoriteUseCase(DeleteFavoriteUseCase.Params(favorite))
         }
     }
-
-    fun deleteByName(cityName: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            _favorites.value.firstOrNull { it.name == cityName }?.let { favorite ->
-                deleteFavoriteUseCase(DeleteFavoriteUseCase.Params(favorite))
-            }
-        }
-    }
-
-
-    fun isFavorite(geocoderResult: GeocoderResult?): Boolean {
-        geocoderResult?.let {
-            return _favorites.value.any { favorite ->
-                favorite.name == geocoderResult.name &&
-                        favorite.country == geocoderResult.country &&
-                        favorite.lat == geocoderResult.lat &&
-                        favorite.lon == geocoderResult.lon &&
-                        favorite.state == geocoderResult.state
-            }
-        } ?: run {
-            return false
-        }
-    }
-
 
     fun setFavoriteIntoSavedStateHandle(
         favorite: Favorite,

@@ -61,15 +61,7 @@ fun MainScreen(
     }
     mainViewModel.isFavorite()
     val isFavorite = mainViewModel.isFavoriteStateFlow.collectAsState()
-
-    /*var isFavorite by remember {
-        if (searchCity != null) {
-            mainViewModel.geocoderResult = searchCity
-        }
-        val isF = favoriteViewModel.isFavorite(mainViewModel.geocoderResult)
-        mutableStateOf(isF)
-    }*/
-
+    
     val weatherData =
         produceState<DataOrException<Weather, Boolean, Exception>>(
             initialValue = DataOrException(
@@ -92,15 +84,6 @@ fun MainScreen(
                 isFavorite = isFavorite.value,
                 onButtonClicked = {
                     mainViewModel.addOrRemoveFavorite()
-                    /*mainViewModel.geocoderResult?.let {
-                        if (!isFavorite) {
-                            favoriteViewModel.addFavorite(it)
-                            isFavorite = true
-                        } else {
-                            favoriteViewModel.deleteByName(it.name)
-                            isFavorite = false
-                        }
-                    }*/
                 }
             )
         }

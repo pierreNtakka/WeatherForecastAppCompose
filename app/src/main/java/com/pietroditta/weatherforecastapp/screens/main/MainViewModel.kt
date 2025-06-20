@@ -6,7 +6,7 @@ import com.pietroditta.weatherforecastapp.model.DataOrException
 import com.pietroditta.weatherforecastapp.model.Favorite
 import com.pietroditta.weatherforecastapp.model.GeocoderResult
 import com.pietroditta.weatherforecastapp.model.Weather
-import com.pietroditta.weatherforecastapp.screens.favourite.usecase.AddFavoriteUseCase
+import com.pietroditta.weatherforecastapp.screens.main.use_case.AddFavoriteUseCase
 import com.pietroditta.weatherforecastapp.screens.main.use_case.DeleteFavoriteByNameLatLonUseCase
 import com.pietroditta.weatherforecastapp.screens.main.use_case.DirectGeocoderUseCase
 import com.pietroditta.weatherforecastapp.screens.main.use_case.FindFavoriteByCityNameLatLonUseCase
@@ -29,7 +29,7 @@ class MainViewModel @Inject constructor(
 
     var geocoderResult: GeocoderResult? = null
 
-   private val isFavoriteState = MutableStateFlow<Boolean>(false)
+    private val isFavoriteState = MutableStateFlow(false)
     val isFavoriteStateFlow = isFavoriteState.asStateFlow()
 
 

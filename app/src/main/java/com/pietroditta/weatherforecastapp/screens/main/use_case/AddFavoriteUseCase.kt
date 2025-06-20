@@ -1,4 +1,4 @@
-package com.pietroditta.weatherforecastapp.screens.favourite.usecase
+package com.pietroditta.weatherforecastapp.screens.main.use_case
 
 import com.pietroditta.weatherforecastapp.model.Favorite
 import com.pietroditta.weatherforecastapp.repository.FavoriteRepository
