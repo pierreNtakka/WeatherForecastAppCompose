@@ -56,9 +56,7 @@ object AppModule {
                 super.onCreate(db)
                 db.execSQL("INSERT INTO measurement_units (name) VALUES ('metric')")
             }
-        })
-
-            .fallbackToDestructiveMigration(false)
+        }).fallbackToDestructiveMigration(false)
             .build()
     }
 
